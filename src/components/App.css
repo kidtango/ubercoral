@@ -1,0 +1,12 @@
+html,
+body {
+  margin: 0;
+  background-color: #f1f6f8;
+}
+
+a,
+a:link,
+a:visited {
+  text-decoration: none;
+}
+
