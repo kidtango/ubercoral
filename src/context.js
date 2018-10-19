@@ -67,10 +67,9 @@ export class Provider extends Component {
               name
               price
               description
-              image {
+              display_image {
                 url
               }
-              
             }
           }`,
         },
@@ -89,7 +88,7 @@ export class Provider extends Component {
               name
               price
               description
-              image {
+              display_image {
                 url
               }
               

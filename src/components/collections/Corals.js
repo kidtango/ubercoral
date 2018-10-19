@@ -4,16 +4,13 @@ import { Link } from 'react-router-dom';
 import {
   Box,
   Text,
-  Divider,
-  Icon,
-  IconButton,
   Heading,
   Image,
   Container,
   Card,
-  Flyout,
   Button,
 } from 'gestalt';
+import CoralsDetail from './CoralsDetail';
 import { Consumer } from '../../context';
 
 
@@ -26,17 +23,18 @@ class Corals extends Component {
   }
 
   handleClick = () => {
-    this.setState(() => ({ open: !this.state.open }));
+    console.log('click');
   }
 
-  handleDismiss = () => {
-    this.setState(() => ({ open: false }));
-  }
+  // handleDismiss = () => {
+  //   this.setState(() => ({ open: false }));
+  // }
 
   render() {
     const { coralType } = this.props.match.params;
     return (
       <React.Fragment>
+
         <Container>
           <Consumer>
 
@@ -88,12 +86,13 @@ class Corals extends Component {
                                 fit="contain"
                                 alt={coralType}
 
-                                src={`${apiUrl}${coral.image[0].url}`}
+                                src={`${apiUrl}${coral.display_image.url}`}
                               />
                             </Box>
                           )}
 
                         >
+
                           <Box
                             display="flex"
                             alignItems="center"
@@ -112,16 +111,20 @@ class Corals extends Component {
                             </Text>
                           </Box>
 
+
+                          {/* Coral Detail */}
+
                           <Button
                             size="sm"
                             accessibilityLabel="More Info"
                             color="blue"
                             text="FRAG IT"
+                            onClick={() => { this.CoralsDetail.handleToggleModal(); }}
                           />
 
                         </Card>
 
-
+                        <CoralsDetail ref={(instance) => { this.CoralsDetail = instance; }} />
                       </Box>
 
                     ))}
@@ -129,6 +132,7 @@ class Corals extends Component {
                   </Box>
 
                 </Box>
+
               </Box>
 
 
@@ -136,6 +140,7 @@ class Corals extends Component {
 
 
           </Consumer>
+
         </Container>
       </React.Fragment>
     );
