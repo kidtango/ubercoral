@@ -1,4 +1,5 @@
 
+/* eslint-disable */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -18,20 +19,13 @@ const apiUrl = process.env.API_URL || 'http://localhost:1337';
 
 
 class Corals extends Component {
-  state = {
-    open: false,
-  }
-
-  handleClick = () => {
-    console.log('click');
-  }
-
   // handleDismiss = () => {
   //   this.setState(() => ({ open: false }));
   // }
 
   render() {
     const { coralType } = this.props.match.params;
+
     return (
       <React.Fragment>
 
@@ -60,6 +54,7 @@ class Corals extends Component {
                       {' '}
                       Corals
                     </Heading>
+
                   </Box>
                   {/* Corals  */}
                   <Box
@@ -75,59 +70,69 @@ class Corals extends Component {
                     padding={4}
                   >
                     {value[coralType].map(coral => (
-                      <Box key={coral._id} padding={4} margin={1} width={150} wrap>
-                        <Card
-                          image={(
-                            <Box height={120} width={120}>
-                              <Image
-                                alignItems="center"
-                                naturalHeight={1}
-                                naturalWidth={1}
-                                fit="contain"
-                                alt={coralType}
+                      <React.Fragment>
 
-                                src={`${apiUrl}${coral.display_image.url}`}
-                              />
-                            </Box>
-                          )}
 
-                        >
+                        <Box position="relative" key={coral._id} padding={4} margin={1} width={150} wrap>
+                          <Card
+                            image={(
+                              <Box height={120} width={120}>
+                                <Image
+                                  alignItems="center"
+                                  naturalHeight={1}
+                                  naturalWidth={1}
+                                  fit="contain"
+                                  alt={coralType}
 
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            direction="column"
+                                  src={`${apiUrl}${coral.display_image.url}`}
+                                />
+                              </Box>
+                            )}
+
                           >
-                            <Box marginBottom={2}>
-                              <Text size="sm" bold align="center">
-                                {coral.name.toUpperCase()}
+
+
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              direction="column"
+                            >
+                              <Box marginBottom={2}>
+                                <Text size="sm" bold align="center">
+                                  {coral.name.toUpperCase()}
+                                </Text>
+                              </Box>
+                            </Box>
+                            <Box margin={1}>
+                              <Text size="sm" color="orange" align="center">
+                                $
+                                {coral.price.toFixed(2)}
                               </Text>
                             </Box>
-                          </Box>
-                          <Box margin={1}>
-                            <Text size="sm" color="orange" align="center">
-                              $
-                              {coral.price.toFixed(2)}
-                            </Text>
-                          </Box>
 
 
-                          {/* Coral Detail */}
+                            {/* Coral Detail */}
+                            <CoralsDetail coral={coral}/>
 
-                          <Button
-                            size="sm"
-                            accessibilityLabel="More Info"
-                            color="blue"
-                            text="FRAG IT"
-                            onClick={() => { this.CoralsDetail.handleToggleModal(); }}
-                          />
+                            {/* <Button
+                              size="sm"
+                              accessibilityLabel="More Info"
+                              color="blue"
+                              text="FRAG IT"
+                              onClick={() => { this.CoralsDetail.handleToggleModal(); }}
+                            /> */}
 
-                        </Card>
+                          </Card>
 
-                        <CoralsDetail ref={(instance) => { this.CoralsDetail = instance; }} />
-                      </Box>
+                          {/* CoralsDetail modal section */}
+
+                        </Box>
+
+
+                      </React.Fragment>
 
                     ))}
+
 
                   </Box>
 
@@ -140,8 +145,10 @@ class Corals extends Component {
 
 
           </Consumer>
+          
 
         </Container>
+
       </React.Fragment>
     );
   }

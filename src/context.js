@@ -70,6 +70,9 @@ export class Provider extends Component {
               display_image {
                 url
               }
+              secondary_images {
+                url
+              }
             }
           }`,
         },
