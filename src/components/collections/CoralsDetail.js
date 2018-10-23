@@ -3,97 +3,154 @@ import {
   Box,
   Text,
   Heading,
-  Image,
   Button,
   Modal,
-  Spinner,
   Column,
   Layer,
+  Divider,
+
 } from 'gestalt';
 
+import ToastMessage from '../toastMessages/ToastMessage';
 import CoralCarousel from './carousel/CoralCarousel';
 
 
-const apiUrl = process.env.API_URL || 'http://localhost:1337';
+// const apiUrl = process.env.API_URL || 'http://localhost:1337';
 
 
 class CoralsDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.handleToggleModal = this._handleToggleModal.bind(this);
-    this.handleLoad = this._handleLoad.bind(this);
-    this.state = {
-      showModal: false,
-      hasLoaded: false,
-    };
+  state = {
+    showModal: false,
+    hasLoaded: false,
+    toastMessage: '',
+    toast: false,
   }
 
-  _handleToggleModal() {
+
+  handleToggleModal = () => {
     this.setState(prevState => ({ showModal: !prevState.showModal, hasLoaded: false }));
   }
 
-  _handleLoad() {
+  handWaitList = () => {
+    this.handleToggleModal();
+    this.showToast("Please Sign In To Be Waitlisted")
+  }
+
+  handleLoad = () => {
     this.setState({ hasLoaded: true });
   }
 
+  showToast = (toastMessage) => {
+    this.setState({ toast: true, toastMessage });
+    setTimeout(() => {
+      this.setState({ toast: false, toastMessage: '' });
+    }, 2000);
+  };
+
+
   render() {
-    const { hasLoaded, showModal } = this.state;
-    const { coral } = this.props;
+    const {
+      hasLoaded,
+      showModal,
+      toastMessage,
+      toast,
+    } = this.state;
+
+    const { coral, addToCart } = this.props;
 
     return (
 
       <Box marginLeft={-1} marginRight={-1} position="relative">
         <Box padding={1}>
-          <Button
-            text="Add To Cart"
-            color="blue"
-            onClick={this.handleToggleModal}
-          />
+          {coral.quantity ? (
+            <Button
+              text="FRAG ME"
+              color="blue"
+              onClick={this.handleToggleModal}
+            />
+          ) : (
+            <Button
+                text="WAITLIST ME"
+                color="blue"
+                onClick={this.handWaitList}
+                color="red"
+              />
+          )}
+
 
           {showModal && (
             <Layer>
               <Modal
 
                 accessibilityCloseLabel="close"
+                size="lg"
                 accessibilityModalLabel="View random images"
                 heading={coral.name}
                 onDismiss={this.handleToggleModal}
                 footer={(
-                  <Box display="flex" direction="row" justifyContent="end">
-                    <Button size="lg" text="Cancel" onClick={this.handleToggleModal} />
+                  <Box display="flex" direction="column" justifyContent="center">
+                    <Box
+                      align="center"
+                      color="transparent"
+                      size="sm"
+                    >
+                      <ToastMessage show={toast} message={toastMessage} color={"orange"} />
+                    </Box>
+
+
+                    {coral.quantity ? (
+                      <Button
+                        size="lg"
+                        text="ADD TO CART"
+                        color="blue"
+                        onClick={() => { addToCart({ type: 'ADD_TO_CART', payload: coral }); this.showToast('Uber Coral Added'); }
+                        }
+                      />
+                    ) : (
+                      <Button size="lg" text="WAITLIST ME" color="red" onClick={this.handleToggleModal} />
+                    )}
                   </Box>
+
                 )}
                 size="lg"
               >
 
                 {/* Main Contents */}
-                <Box display="flex" direction="row">
-                  <Column span={4}>
+                <Box display="flex" direction="row" key={coral._id}>
+                  <Column span={8}>
 
-                    <Box height={400} width={400} alignContent="left" alignItems="start" paddingX={1}>
+                    <Box height={500} width={500} alignContent="center" alignItems="start" paddingX={1} margin={1}>
 
                       <CoralCarousel images={coral.secondary_images} />
 
-                      {/* <Image
-
-                        naturalHeight={1}
-                        naturalWidth={1}
-                        fit="cover"
-                        alt={coral.name}
-
-                        src={`${apiUrl}${coral.display_image.url}`}
-                      /> */}
-
                     </Box>
 
                   </Column>
 
-                  <Column span={8}>
-                    <Box height="100%" padding={1}>
+                  <Column span={4}>
+                    <Box
+                      height="100%"
+                      padding={1}
+                      justifyContent="center"
+                      alignItems="start"
+                    >
                       {/* <Text color="white">{coral.description}</Text> */}
 
+                      <Box margin={2} align="center">
+                        <Heading bold size="sm" align="center" color="orange">
+                          $
+                          {coral.price.toFixed(2)}
+                        </Heading>
+                      </Box>
+                      <Divider />
+                      <Box align="center" padding={4}>
+                        <Text bold align="center">{coral.description}</Text>
+                      </Box>
+
+
                     </Box>
                   </Column>
+
                 </Box>
                 {/* Main Contents Ends */}
 

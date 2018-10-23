@@ -1,17 +1,18 @@
+
 import React from 'react';
 import {
   Box,
-  Text,
   Divider,
-  Icon,
   SearchField,
-  IconButton,
   Heading,
   Image,
 } from 'gestalt';
 import { NavLink } from 'react-router-dom';
+import AuthNavMenu from './AuthNavMenu';
+import Cart from '../../Cart';
 
-const Navbar = () => (
+
+const AuthNav = () => (
   <React.Fragment>
     <Box
       display="flex"
@@ -60,18 +61,13 @@ const Navbar = () => (
           // value={this.state.value}
           />
         </Box>
+
+        {/* Shopping Cart */}
+        <Box><Cart /></Box>
+
+        {/* Nav Menu */}
         <Box paddingX={2}>
-          <IconButton
-            accessibilityLabel="Notifications"
-            icon="shopping-bag"
-            size="md"
-          />
-        </Box>
-        {/* Sign in Link */}
-        <Box paddingX={2}>
-          <NavLink to="/Signin">
-            <Text size="xl">Sign In</Text>
-          </NavLink>
+          <AuthNavMenu />
         </Box>
       </Box>
     </Box>
@@ -79,4 +75,4 @@ const Navbar = () => (
   </React.Fragment>
 );
 
-export default Navbar;
+export default AuthNav;

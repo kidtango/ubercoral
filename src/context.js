@@ -1,19 +1,59 @@
 
 import React, { Component } from 'react';
 import Strapi from 'strapi-sdk-javascript/build/main';
+import { setCart, getCart } from './components/utils';
+
 
 const Context = React.createContext();
 
 const apiUrl = process.env.API_URL || 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
 
+
+const addToCart = (state, coral) => {
+  const { cartItems } = state;
+
+  const alreadyInCart = cartItems.findIndex(item => item._id === coral._id);
+
+
+  // index of item will return -1 if item is not in cart
+  if (alreadyInCart === -1) {
+    const updatedItems = cartItems.concat({
+      ...coral,
+      quantity: 1,
+    });
+    setCart(updatedItems);
+    return updatedItems;
+  }
+  const updatedItems = [...cartItems];
+  updatedItems[alreadyInCart].quantity += 1;
+
+  setCart(updatedItems)
+  return updatedItems;
+};
+
+
+// Delete item from cart
+const deleteItem = (state, id) => {
+  const { cartItems } = state;
+
+  const filteredItems = cartItems.filter(item => item._id !== id);
+  setCart(filteredItems);
+  return filteredItems;
+
+
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'SPS':
+    case 'ADD_TO_CART':
       return {
-        ...state,
-        sps: state.sps,
+        cartItems: addToCart(state, action.payload),
       };
+
+    case 'DELETE_ITEM':
+      return { cartItems: deleteItem(state, action.payload) };
+
 
     default:
       return state;
@@ -27,9 +67,11 @@ export class Provider extends Component {
     lps: [],
     soft: [],
     wysiwygs: [],
+    cartItems: [],
     loadingCoralTypes: true,
     loadingSPS: true,
-    loadingSoft: true,
+    loadingSOFT: true,
+    loadingLPS: true,
     loadingWysiwyg: true,
     dispatch: (action) => {
       this.setState(state => reducer(state, action));
@@ -53,7 +95,37 @@ export class Provider extends Component {
           }`,
         },
       });
-      this.setState({ coralTypes: data.coraltypes, loadingCoralTypes: false });
+      this.setState({
+        coralTypes: data.coraltypes,
+        loadingCoralTypes: false,
+        cartItems: getCart()
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const { data } = await strapi.request('POST', '/graphql', {
+        data: {
+          query: `query {
+            wysiwygs {
+              _id
+              name
+              price
+              description
+              quantity
+              image {
+                url
+              }
+              secondary_images {
+                url
+              }
+              
+            }
+          }`,
+        },
+      });
+      this.setState({ wysiwygs: data.wysiwygs, loadingWysiwyg: false });
     } catch (error) {
       console.log(error);
     }
@@ -67,6 +139,7 @@ export class Provider extends Component {
               name
               price
               description
+              quantity
               display_image {
                 url
               }
@@ -91,7 +164,11 @@ export class Provider extends Component {
               name
               price
               description
+              quantity
               display_image {
+                url
+              }
+              secondary_images {
                 url
               }
               
@@ -99,7 +176,7 @@ export class Provider extends Component {
           }`,
         },
       });
-      this.setState({ soft: data.softs, loadingSoft: false });
+      this.setState({ soft: data.softs, loadingSOFT: false });
     } catch (error) {
       console.log(error);
     }
@@ -113,7 +190,11 @@ export class Provider extends Component {
               name
               price
               description
-              image {
+              quantity
+              display_image {
+                url
+              }
+              secondary_images {
                 url
               }
               
@@ -121,29 +202,7 @@ export class Provider extends Component {
           }`,
         },
       });
-      this.setState({ lps: data.lps });
-    } catch (error) {
-      console.log(error);
-    }
-
-    try {
-      const { data } = await strapi.request('POST', '/graphql', {
-        data: {
-          query: `query {
-            wysiwygs {
-              _id
-              name
-              price
-              description
-              image {
-                url
-              }
-              
-            }
-          }`,
-        },
-      });
-      this.setState({ wysiwygs: data.wysiwygs, loadingWysiwyg: false });
+      this.setState({ lps: data.lps, loadingLPS: false });
     } catch (error) {
       console.log(error);
     }
@@ -151,7 +210,7 @@ export class Provider extends Component {
 
   render() {
     return (
-      <Context.Provider value={this.state}>
+      <Context.Provider value={{ state: this.state }}>
         {this.props.children}
       </Context.Provider>
     );

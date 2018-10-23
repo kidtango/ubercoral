@@ -5,10 +5,8 @@ import 'gestalt/dist/gestalt.css';
 import { Provider } from './context';
 
 import App from './components/App';
-import Signin from './components/Signin';
 import Checkout from './components/Checkout';
-import Signup from './components/Signup';
-import Navbar from './components/Navbar';
+import Navbar from './components/navbar/Navbar';
 import Corals from './components/collections/Corals';
 
 const Root = () => (
@@ -19,8 +17,6 @@ const Root = () => (
         <Navbar />
         <Switch>
           <Route component={App} exact path="/" />
-          <Route component={Signin} path="/signin" />
-          <Route component={Signup} path="/Signup" />
           <Route component={Checkout} path="/Checkout" />
           <Route component={Corals} path="/:coralType" />
         </Switch>

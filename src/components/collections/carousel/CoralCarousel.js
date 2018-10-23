@@ -20,13 +20,16 @@ const apiUrl = process.env.API_URL || 'http://localhost:1337';
 const CoralCarousel = ({ images }) => (
 
 
-  <Carousel showArrows swipeable>
-    {images.map(image => (
-      <div>
-        <img src={`${apiUrl}${image.url}`} />
-      </div>
-    ))}
+  <Carousel showArrows>
+    {
+      images.map(image => (
+        <div key={image._id}>
+          <img src={`${apiUrl}${image.url}`} alt="coral" />
+        </div>
+      ))
+    }
   </Carousel>
+
 
 );
 

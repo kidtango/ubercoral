@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Box,
   Text,
@@ -7,8 +7,7 @@ import {
   Avatar,
   Button,
   Heading,
-  Image,
-  Spinner,
+  Mask,
 } from 'gestalt';
 
 import { Link } from 'react-router-dom';
@@ -24,12 +23,15 @@ const apiUrl = process.env.API_URL || 'http://localhost:1337';
 const App = () => (
   <Consumer>
     {(value) => {
-      const { coralTypes, wysiwygs, loadingWysiwyg } = value;
+      const {
+        coralTypes, wysiwygs, loadingWysiwyg, dispatch,
+      } = value.state;
 
 
       return (
         <React.Fragment>
           <Container>
+
             {/* Coral Type Section */}
             <Box display="flex" justifyContent="center" marginBottom={2}>
               {/* Coral Heading */}
@@ -84,79 +86,97 @@ const App = () => (
 
               {/* Corals Section */}
               <Box display="flex" direction="column" alignItems="center">
-                <Box margin={2}>
-                  {/* Heading Section */}
-                  <Heading size="sm" color="orange">
-                    WYSIWYG
-                  </Heading>
-                </Box>
+
                 {/* Corals  */}
                 {loadingWysiwyg ? <Loader />
                   : (
-                    <Box
-                      wrap
-                      dangerouslySetInlineStyle={{
-                        __style: {
-                          backgroundColor: '#bdcdd9',
-                        },
-                      }}
-                      shape="rounded"
-                      display="flex"
-                      justifyContent="center"
-                      padding={4}
-                    >
-                      {wysiwygs.map(coral => (
-                        <Box key={coral._id} padding={4} margin={1} width={150} wrap>
-                          <Card
-                            image={(
-                              <Box height={120} width={120}>
-                                <Image
-                                  alt={coral.name}
-                                  alignItems="center"
-                                  naturalHeight={1}
-                                  naturalWidth={1}
-                                  fit="contain"
+                    <React.Fragment>
+                      <Box margin={2}>
+                        {/* Heading Section */}
+                        <Heading size="sm" color="orange">
+                          WYSIWYG
+                        </Heading>
+                      </Box>
+
+                      <Box
+                        wrap
+                        dangerouslySetInlineStyle={{
+                          __style: {
+                            backgroundColor: '#bdcdd9',
+                          },
+                        }}
+                        shape="rounded"
+                        display="flex"
+                        justifyContent="center"
+                        padding={4}
+                      >
+                        {wysiwygs.map(coral => (
+                          <Box key={coral._id} padding={4} margin={1} width={150} wrap>
+                            <Card
+                              image={(
+                                // <Box height={120} width={120}>
+                                //   <Image
+                                //     alt={coral.name}
+                                //     alignItems="center"
+                                //     naturalHeight={1}
+                                //     naturalWidth={1}
+                                //     fit="contain"
 
 
-                                  src={`${apiUrl}${coral.image[0].url}`}
-                                />
-                              </Box>
-                            )}
+                                //     src={`${apiUrl}${coral.image[0].url}`}
+                                //   />
+                                // </Box>
 
-                          >
-                            <Box
-                              display="flex"
-                              alignItems="center"
-                              direction="column"
+                                <Box maxWidth={300} maxHeight={300}>
+
+                                  <Mask shape="rounded">
+                                    <img
+
+                                      alt="ubercoral.com"
+                                      src={`${apiUrl}${coral.image[0].url}`}
+                                      style={{ maxWidth: '100%', display: 'block' }}
+                                    />
+                                  </Mask>
+
+                                </Box>
+
+                              )}
+
                             >
-                              <Box marginBottom={2}>
-                                <Text size="sm" bold align="center">
-                                  {coral.name.toUpperCase()}
+                              <Box
+                                display="flex"
+                                alignItems="center"
+                                direction="column"
+                              >
+                                <Box marginBottom={2}>
+                                  <Text size="sm" bold align="center">
+                                    {coral.name.toUpperCase()}
+                                  </Text>
+                                </Box>
+                              </Box>
+                              <Box margin={1}>
+                                <Text size="sm" color="orange" align="center">
+                                  $
+                                  {coral.price.toFixed(2)}
                                 </Text>
                               </Box>
-                            </Box>
-                            <Box margin={1}>
-                              <Text size="sm" color="orange" align="center">
-                                $
-                                {coral.price.toFixed(2)}
-                              </Text>
-                            </Box>
 
-                            <Button
-                              size="sm"
-                              accessibilityLabel="More Info"
-                              color="blue"
-                              text="Add To Cart"
-                            />
+                              <Button
+                                size="sm"
+                                accessibilityLabel="More Info"
+                                color="blue"
+                                text="Add To Cart"
+                              />
 
-                          </Card>
+                            </Card>
 
 
-                        </Box>
+                          </Box>
 
-                      ))}
+                        ))}
 
-                    </Box>
+                      </Box>
+                    </React.Fragment>
                   )
                 }
               </Box>
