@@ -12,7 +12,7 @@ import AuthNavMenu from './AuthNavMenu';
 import Cart from '../../Cart';
 
 
-const AuthNav = () => (
+const AuthNav = ({ toggleSigninModal }) => (
   <React.Fragment>
     <Box
       display="flex"

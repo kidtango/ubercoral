@@ -12,23 +12,30 @@ import Signin from '../../auth/Signin';
 
 
 class AuthNavMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { open: false };
-    this.handleClick = this._handleClick.bind(this);
-    this.handleDismiss = this._handleDismiss.bind(this);
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { open: false };
+  //   this.handleClick = this._handleClick.bind(this);
+  //   this.handleDismiss = this._handleDismiss.bind(this);
+  // }
+
+  state = {
+    open: false,
   }
 
-  _handleClick() {
-    this.setState(() => ({ open: !this.state.open }));
+
+  handleClick = () => {
+    const { open } = this.state;
+    this.setState({ open: !open });
   }
 
-  _handleDismiss() {
-    this.setState(() => ({ open: false }));
+  handleDismiss = () => {
+    const { open } = this.state;
+    this.setState({ open: false });
   }
-
   render() {
     return (
+
       <Box>
         <div
           style={{ display: 'inline-block' }}
@@ -51,7 +58,8 @@ class AuthNavMenu extends React.Component {
             onClick={this.handleClick}
           />
         </div>
-        {this.state.open
+        {
+          this.state.open
           && (
             <Layer>
               <Flyout
@@ -75,7 +83,8 @@ class AuthNavMenu extends React.Component {
                 </Box>
               </Flyout>
             </Layer>
-          )}
+          )
+        }
       </Box>
     );
   }

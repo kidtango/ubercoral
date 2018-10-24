@@ -76,6 +76,7 @@ class Corals extends Component {
                         display="flex"
                         justifyContent="center"
                         padding={4}
+                        marginBottom={8}
                       >
                         {context.state[coralType].map(coral => (
 
@@ -90,17 +91,6 @@ class Corals extends Component {
                             key={coral._id}>
                             <Card
                               image={(
-                                // <Box height={120} width={120}>
-                                //   <Image
-                                //     alignItems="center"
-                                //     naturalHeight={1}
-                                //     naturalWidth={1}
-                                //     fit="cover"
-                                //     alt={coralType}
-
-                                //     src={`${apiUrl}${coral.display_image.url}`}
-                                //   />
-                                // </Box>
 
                                 <Box maxWidth={300} maxHeight={300}>
 

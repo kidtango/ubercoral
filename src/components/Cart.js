@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import {
   Box,
@@ -33,9 +34,9 @@ class Cart extends Component {
 
   cartHasItemsColor = (cartItems) => {
     if (cartItems.length !== 0) {
-      return 'blue';
+      return 'green';
     }
-    return 'gray';
+    return 'red';
   }
 
   _handleClick() {
@@ -146,7 +147,9 @@ class Cart extends Component {
                           </Box>
 
                           <Box marginTop={3}>
-                            <Button size="sm" align="center" color="red" text="Checkout" />
+                            <NavLink to="/checkout">
+                              <Button size="sm" align="center" color="red" text="Checkout" />
+                            </NavLink>
                           </Box>
                         </Box>
                       </Box>

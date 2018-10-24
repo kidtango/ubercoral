@@ -73,6 +73,7 @@ const App = () => (
             {/* WYSIWYG begins */}
             <Box
               marginTop={4}
+              padding={4}
               display="flex"
               justifyContent="center"
               alignItems="start"
@@ -109,9 +110,10 @@ const App = () => (
                         display="flex"
                         justifyContent="center"
                         padding={4}
+                        marginBottom={8}
                       >
                         {wysiwygs.map(coral => (
-                          <Box key={coral._id} padding={4} margin={1} width={150} wrap>
+                          <Box key={coral._id} padding={4} width={150} wrap>
                             <Card
                               image={(
                                 // <Box height={120} width={120}>
