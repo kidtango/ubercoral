@@ -29,11 +29,8 @@ class Corals extends Component {
 
     return (
       <React.Fragment>
-
         <Container>
           <Consumer>
-
-
             {context => {
               const { dispatch } = context.state
 
@@ -80,8 +77,6 @@ class Corals extends Component {
                       >
                         {context.state[coralType].map(coral => (
 
-
-
                           <Box
                             position="relative"
                             padding={4}
@@ -91,9 +86,7 @@ class Corals extends Component {
                             key={coral._id}>
                             <Card
                               image={(
-
                                 <Box maxWidth={300} maxHeight={300}>
-
                                   <Mask shape="rounded">
                                     <img
 
@@ -102,11 +95,7 @@ class Corals extends Component {
                                       style={{ maxWidth: '100%', display: 'block' }}
                                     />
                                   </Mask>
-
                                 </Box>
-
-
-
                               )}
                             >
                               <Box
@@ -130,9 +119,6 @@ class Corals extends Component {
                                 {coral.price.toFixed(2)}
                                 </Text>
                               </Box>
-
-
-
                               {/* Coral Detail */}
                               <CoralsDetail coral={coral} addToCart={dispatch} />
 
@@ -141,34 +127,15 @@ class Corals extends Component {
                             {/* CoralsDetail modal section */}
 
                           </Box>
-
-
-
-
                         ))}
-
-
                       </Box>
-
                     </Box>)
-
                   }
-
                 </Box>
               )
-
-
-
-
-
             }}
-
-
           </Consumer>
-
-
         </Container>
-
       </React.Fragment >
     );
   }

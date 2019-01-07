@@ -30,8 +30,6 @@ export default function footer() {
         justifyContent="around"
         paddingY={4}
         wrap
-
-
       >
         {/* 1st column */}
         <Column span={4}>

@@ -51,3 +51,6 @@ export const clearToken = (tokenKey = TOKEN_KEY) => {
     localStorage.removeItem(tokenKey);
   }
 }
+
+// API end points
+export const apiUrl = process.env.API_URL || 'http://localhost:1337';

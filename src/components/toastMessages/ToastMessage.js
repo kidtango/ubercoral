@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Toast,
-
 } from 'gestalt';
 
 const ToastMessage = ({ show, message, color }) => (

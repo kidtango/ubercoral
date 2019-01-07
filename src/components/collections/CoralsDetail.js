@@ -33,7 +33,7 @@ class CoralsDetail extends Component {
 
   handWaitList = () => {
     this.handleToggleModal();
-    this.showToast("Please Sign In To Be Waitlisted")
+    this.showToast('Please Sign In To Be Waitlisted');
   }
 
   handleLoad = () => {
@@ -50,7 +50,6 @@ class CoralsDetail extends Component {
 
   render() {
     const {
-      hasLoaded,
       showModal,
       toastMessage,
       toast,
@@ -60,7 +59,7 @@ class CoralsDetail extends Component {
 
     return (
 
-      <Box marginLeft={-1} marginRight={-1} position="relative">
+      <Box marginLeft={-1} marginRight={-1} position="relative" display="flex" wrap>
         <Box padding={1}>
           {coral.quantity ? (
             <Button
@@ -88,13 +87,13 @@ class CoralsDetail extends Component {
                 heading={coral.name}
                 onDismiss={this.handleToggleModal}
                 footer={(
-                  <Box display="flex" direction="column" justifyContent="center">
+                  <Box display="flex" direction="column" justifyContent="center" wrap>
                     <Box
                       align="center"
                       color="transparent"
                       size="sm"
                     >
-                      <ToastMessage show={toast} message={toastMessage} color={"orange"} />
+                      <ToastMessage show={toast} message={toastMessage} color="orange" />
                     </Box>
 
 
@@ -116,7 +115,7 @@ class CoralsDetail extends Component {
               >
 
                 {/* Main Contents */}
-                <Box display="flex" direction="row" key={coral._id}>
+                <Box display="flex" direction="row" key={coral._id} wrap>
                   <Column span={8}>
 
                     <Box height={500} width={500} alignContent="center" alignItems="start" paddingX={1} margin={1}>
@@ -136,7 +135,7 @@ class CoralsDetail extends Component {
                     >
                       {/* <Text color="white">{coral.description}</Text> */}
 
-                      <Box margin={2} align="center">
+                      <Box margin={2} align="center" display="flex" wrap>
                         <Heading bold size="sm" align="center" color="orange">
                           $
                           {coral.price.toFixed(2)}

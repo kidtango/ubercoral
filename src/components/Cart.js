@@ -17,11 +17,8 @@ import { Consumer } from '../context';
 import { calculatePrice } from './utils/index';
 
 class Cart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { open: false };
-    this.handleClick = this._handleClick.bind(this);
-    this.handleDismiss = this._handleDismiss.bind(this);
+  state = {
+    open: false,
   }
 
 
@@ -39,16 +36,17 @@ class Cart extends Component {
     return 'red';
   }
 
-  _handleClick() {
+  handleClick = () => {
     this.setState(() => ({ open: !this.state.open }));
   }
 
-  _handleDismiss() {
+  handleDismiss = () => {
     this.setState(() => ({ open: false }));
   }
 
 
   render() {
+    const { open } = this.state;
     return (
 
       <Consumer>
@@ -75,7 +73,7 @@ class Cart extends Component {
                 </Box>
 
               </div>
-              {this.state.open
+              {open
                 && (
                   <Layer>
                     <Flyout
@@ -84,8 +82,6 @@ class Cart extends Component {
                       onDismiss={this.handleDismiss}
                       positionRelativeToAnchor
                       size="lg"
-
-
                     >
                       <Box margintop={2} padding={3}>
                         <Box display="flex" direction="column" alignItems="center" padding={2}>
@@ -101,7 +97,7 @@ class Cart extends Component {
                             item(s) selected
                           </Text>
 
-                          {/* Cart Items will be added */}
+                          {/* Cart Items */}
                           {cartItems.map(item => (
                             <Box key={item._id} display="flex" alignItems="center" padding={1}>
 
