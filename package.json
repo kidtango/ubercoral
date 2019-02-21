@@ -10,6 +10,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
     "react-spinners": "^0.4.7",
+    "serve": "^10.1.2",
     "strapi-sdk-javascript": "^0.3.0"
   },
   "scripts": {
@@ -17,7 +18,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "dev": "react-scripts start",
   },
   "eslintConfig": {
     "extends": "react-app"
