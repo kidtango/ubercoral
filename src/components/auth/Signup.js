@@ -17,7 +17,7 @@ import {
   Link,
 } from 'gestalt';
 
-const apiUrl = process.env.API_URL || 'http://localhost:1337';
+const apiUrl = process.env.API_URL || 'https://thecoralshop.herokuapp.com/';
 const strapi = new Strapi(apiUrl);
 
 class Signup extends React.Component {

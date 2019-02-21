@@ -1,26 +1,22 @@
-
 import React, { Component } from 'react';
 import Strapi from 'strapi-sdk-javascript/build/main';
 import { setCart, getCart } from './components/utils';
 
-
 const Context = React.createContext();
 
-const apiUrl = process.env.API_URL || 'http://localhost:1337';
+const apiUrl = process.env.API_URL || 'https://thecoralshop.herokuapp.com';
 const strapi = new Strapi(apiUrl);
-
 
 const addToCart = (state, coral) => {
   const { cartItems } = state;
 
   const alreadyInCart = cartItems.findIndex(item => item._id === coral._id);
 
-
   // index of item will return -1 if item is not in cart
   if (alreadyInCart === -1) {
     const updatedItems = cartItems.concat({
       ...coral,
-      quantity: 1,
+      quantity: 1
     });
     setCart(updatedItems);
     return updatedItems;
@@ -28,10 +24,9 @@ const addToCart = (state, coral) => {
   const updatedItems = [...cartItems];
   updatedItems[alreadyInCart].quantity += 1;
 
-  setCart(updatedItems)
+  setCart(updatedItems);
   return updatedItems;
 };
-
 
 // Delete item from cart
 const deleteItem = (state, id) => {
@@ -40,20 +35,17 @@ const deleteItem = (state, id) => {
   const filteredItems = cartItems.filter(item => item._id !== id);
   setCart(filteredItems);
   return filteredItems;
-
-
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'ADD_TO_CART':
       return {
-        cartItems: addToCart(state, action.payload),
+        cartItems: addToCart(state, action.payload)
       };
 
     case 'DELETE_ITEM':
       return { cartItems: deleteItem(state, action.payload) };
-
 
     default:
       return state;
@@ -73,9 +65,9 @@ export class Provider extends Component {
     loadingSOFT: true,
     loadingLPS: true,
     loadingWysiwyg: true,
-    dispatch: (action) => {
+    dispatch: action => {
       this.setState(state => reducer(state, action));
-    },
+    }
   };
 
   async componentDidMount() {
@@ -92,8 +84,8 @@ export class Provider extends Component {
               }
               
             }
-          }`,
-        },
+          }`
+        }
       });
       this.setState({
         coralTypes: data.coraltypes,
@@ -122,8 +114,8 @@ export class Provider extends Component {
               }
               
             }
-          }`,
-        },
+          }`
+        }
       });
       this.setState({ wysiwygs: data.wysiwygs, loadingWysiwyg: false });
     } catch (error) {
@@ -147,8 +139,8 @@ export class Provider extends Component {
                 url
               }
             }
-          }`,
-        },
+          }`
+        }
       });
       this.setState({ sps: data.sps, loadingSPS: false });
     } catch (error) {
@@ -173,8 +165,8 @@ export class Provider extends Component {
               }
               
             }
-          }`,
-        },
+          }`
+        }
       });
       this.setState({ soft: data.softs, loadingSOFT: false });
     } catch (error) {
@@ -199,8 +191,8 @@ export class Provider extends Component {
               }
               
             }
-          }`,
-        },
+          }`
+        }
       });
       this.setState({ lps: data.lps, loadingLPS: false });
     } catch (error) {
